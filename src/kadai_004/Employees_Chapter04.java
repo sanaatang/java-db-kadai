@@ -42,7 +42,7 @@ public class Employees_Chapter04 {
 		} catch (SQLException e) {
 			System.out.println("エラー発生: " + e.getMessage());
 		} finally {
-			//解放
+			
 			try {
 				if (statement != null) statement.close();
 				if (con != null) con.close();
