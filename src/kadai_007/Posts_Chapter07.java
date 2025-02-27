@@ -31,39 +31,23 @@ public class Posts_Chapter07 {
             // **既存のデータを削除**
             String sqlDelete = "DELETE FROM posts";
             deleteStatement = con.prepareStatement(sqlDelete);
-            deleteStatement.executeUpdate();
-            System.out.println("既存のデータを削除しました");
+            deleteStatement.executeUpdate();  
             
             //二次元配列
-            Object[][] postData = {
-            		{1003, "2023-02-08", "昨日の夜は徹夜でした・・", 13},
-            		{1002, "2023-02-08", "お疲れ様です！", 12},
-            		{1003, "2023-02-09", "今日も頑張ります！", 18},
-            		{1001, "2023-02-09", "無理は禁物ですよ！", 17},
-                    {1002, "2023-02-10", "明日から連休ですね！", 20}            		            		
-            };
-            
-            //SQLクエリを準備
-            String sql = "INSERT INTO posts (user_id, posted_at, post_content, likes) VALUES (?,?,?,?)";
-            statement = con.prepareStatement(sql);		
-            
-            
-            int rowCnt = 0;
+            String sql = "INSERT INTO posts (user_id, posted_at, post_content, likes) VALUES " +
+                    "(1003, '2023-02-08', '昨日の夜は徹夜でした・・', 13), " +
+                    "(1002, '2023-02-08', 'お疲れ様です！', 12), " +
+                    "(1003, '2023-02-09', '今日も頑張ります！', 18), " +
+                    "(1001, '2023-02-09', '無理は禁物ですよ！', 17), " +
+                    "(1002, '2023-02-10', '明日から連休ですね！', 20);";
             
             System.out.println("レコード追加を実行します");
-            for( int i = 0; i < postData.length; i++ ) {
-            	statement.setInt(1,(int) postData[i][0]);
-            	statement.setString(2, (String) postData[i][1]);
-            	statement.setString(3, (String) postData[i][2]);
-            	statement.setInt(4,(int)  postData[i][3]);
-                       
-            //SQLクエリを実行
-            rowCnt += statement.executeUpdate();
-            
-            }
-            
-            System.out.println( rowCnt + "件のレコードが追加されました");
-            
+
+       statement = con.prepareStatement(sql);
+       int rowCnt = statement.executeUpdate();
+       System.out.println(rowCnt + "件のレコードが追加されました");
+
+    
             //user_idが1002のデータを検索するSQL
             String sqlSelect = "SELECT posted_at, post_content, likes FROM posts WHERE user_id = ?";
             selectStatement = con.prepareStatement(sqlSelect);
